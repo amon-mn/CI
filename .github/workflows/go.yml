@@ -11,7 +11,29 @@ on:
 
 jobs:
 
+  run_database:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go_version: [ '1.19', '1.18', '>=1.19' ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go_version }}
+
+      - name: Build-DB
+        run: docker-compose build
+
+      - name: Create-DB
+        run: docker-compose up -d
+
+
   test:
+    needs: run_database
     runs-on: ubuntu-latest
     strategy:
       matrix:
