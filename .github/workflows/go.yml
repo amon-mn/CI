@@ -31,7 +31,6 @@ jobs:
       - name: Create-DB
         run: docker-compose up -d
 
-
   unit_tests:
     needs: run_database
     runs-on: ubuntu-latest
@@ -55,7 +54,6 @@ jobs:
 
     - name: Test
       run: go test -v main_test.go
-
 
   integ_tests:
     needs: unit_tests
